@@ -31,6 +31,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		// Criando um objeto para um novo usuario com seus dados
 		$novoUsuario = new Usuario($nome, $email, $senha, $tipo);
 
+		// Como não retorna nada ":void", não precisa criar variavel
+		Utils::dump($novoUsuario);
+
 	}
 
 }
