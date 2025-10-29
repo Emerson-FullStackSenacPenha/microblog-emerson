@@ -21,11 +21,30 @@ class Usuario {
       
         $this->setNome($valorNome);
         $this->setEmail($valorEmail);
-        $this->setEmail($valorEmail);
         $this->setSenha($valorSenha);
         $this->setTipo($valorTipo);
         $this->setId($valorId);
 
+    }
+
+    private function setNome(string $valorNome):void {
+        $this->nome = $valorNome;
+    }
+
+    private function setEmail(string $valorEmail):void {
+        $this->email = $valorEmail;
+    }
+
+    private function setSenha(string $valorSenha):void {
+        $this->senha = $valorSenha;
+    }
+
+    private function setTipo(string $valorTipo):void {
+        $this->tipo = $valorTipo;
+    }
+
+    private function setId(?int $valorId):void {
+        $this->id = $valorId;
     }
 
 }
