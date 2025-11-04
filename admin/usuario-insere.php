@@ -1,7 +1,12 @@
 <?php 
 
+require_once "../src/Database/Conecta.php";
 require_once "../src/Models/Usuario.php";
+require_once "../src/Services/UsuarioServico.php";
 require_once "../src/Helpers/Utils.php";
+
+// Variavél que será usada para montar mensagens de erro personalizadas
+$usuarioServico = new UsuarioServico();
 
 // Variavel que será usada para montar mensagens de erro personalizadas
 $erro = null;
@@ -20,19 +25,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$erro = "Preencha todos os campos";
 	} else {
 
-		// Capturando e sanitizando os valores do formulario
-		$nome = Utils::sanitizar($_POST['nome']);
-		$email = Utils::sanitizar($_POST['email'], 'email');
-		$tipo = Utils::sanitizar($_POST['tipo']);
+		try {
 
-		// Capturando e codificando (gerando um hash) da senha
-		$senha = Utils::codificarSenha($_POST['senha']);
+			// Capturando e sanitizando os valores do formulario
+			$nome = Utils::sanitizar($_POST['nome']);
+			$email = Utils::sanitizar($_POST['email'], 'email');
+			$tipo = Utils::sanitizar($_POST['tipo']);
 
-		// Criando um objeto para um novo usuario com seus dados
-		$novoUsuario = new Usuario($nome, $email, $senha, $tipo);
+			// Capturando e codificando (gerando um hash) da senha
+			$senha = Utils::codificarSenha($_POST['senha']);
 
-		// Como não retorna nada ":void", não precisa criar variavel
-		Utils::dump($novoUsuario);
+			// Criando um objeto para um novo usuario com seus dados
+			$novoUsuario = new Usuario($nome, $email, $senha, $tipo);
+
+			// Executar o serviço e passar os novos dados
+			$usuarioServico->inserir($novoUsuario);
+
+			header("location:usuarios.php");
+			exit;
+
+		} catch (Throwable $e) {
+
+			/* Se alguma ação dentro do try falahar, o PHP vai lançar (usando a classe Throwable) um erro/eceção. Ao usar o parâmetro "e" (ou outro nome), temos acesso aos detalhes do que aconteceu. */
+			$erro = "Erro ao inserir usuário. <br> ".$e->getMessage();
+		}
 
 	}
 
