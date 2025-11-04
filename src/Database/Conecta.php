@@ -2,7 +2,7 @@
 class Conecta
 {
     private static $servidor = "localhost";
-    private static $banco = "microblog_emerson";
+    private static $banco = "emerson_microblog";
     private static $usuario = "root";
     private static $senha = "";
     private static $conexao = null;

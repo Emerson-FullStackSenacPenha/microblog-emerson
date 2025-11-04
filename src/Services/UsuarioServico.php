@@ -18,7 +18,7 @@ class UsuarioServico {
     // inerir (ISERT)
     public function inserir(Usuario $dadosDoUsuario):void {
 
-        $sql = "INSERT INTO usuario(nome, email, tipo, senha)
+        $sql = "INSERT INTO usuarios(nome, email, tipo, senha)
                 VALUES(:nome, :email, :tipo, :senha)";
 
         $consulta = $this->conexao->prepare($sql);
@@ -27,7 +27,7 @@ class UsuarioServico {
         $consulta->bindValue(":tipo", $dadosDoUsuario->getTipo());
         $consulta->bindValue(":senha", $dadosDoUsuario->getSenha());
 
-        
+        $consulta->execute();
 
     }
 
