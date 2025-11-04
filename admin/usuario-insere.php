@@ -41,8 +41,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			// Executar o serviço e passar os novos dados
 			$usuarioServico->inserir($novoUsuario);
 
-			header("location:usuarios.php");
-			exit;
+			Utils::redirecionarPara("usuarios.php");
 
 		} catch (Throwable $e) {
 

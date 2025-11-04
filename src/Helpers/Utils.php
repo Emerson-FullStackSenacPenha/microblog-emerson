@@ -38,6 +38,13 @@ class Utils {
 
     }
 
+    public static function redirecionarPara(string $paginaDestino):void {
+
+        header("location:".$paginaDestino);
+		exit;
+
+    }
+
 }
 
 ?>
