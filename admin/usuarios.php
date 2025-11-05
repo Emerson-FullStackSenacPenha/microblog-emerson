@@ -63,7 +63,7 @@ require_once "../includes/cabecalho-admin.php";
 								<i class="bi bi-pencil"></i> Atualizar
 								</a>
 							
-								<a class="btn btn-danger excluir" 
+								<a class="btn btn-danger excluir" id="excluir" 
 								href="usuario-exclui.php?id=<?=$usuario['id']?>">
 								<i class="bi bi-trash"></i> Excluir
 								</a>
@@ -77,6 +77,9 @@ require_once "../includes/cabecalho-admin.php";
 		
 	</article>
 </div>
+
+<script src="../js/confirmar-exclusao.js" ></script>
+
 
 
 <?php 

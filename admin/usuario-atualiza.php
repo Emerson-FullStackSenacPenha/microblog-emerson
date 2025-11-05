@@ -34,6 +34,22 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 			$email = Utils::sanitizar( $_POST['email'] );
 			$tipo = Utils::sanitizar( $_POST['tipo'] );
 
+			/*
+			Se o campo senha estiver vazio, manter a senha existente.
+			Caso contrário, verifique as senhas
+			(digitadas no form "Post", e a do banco)
+			*/ 
+			$senha = empty($_POST['senha']) ? $dados['senha'] : Utils::verificarSenha($_POST['senha'], $dados['senha']);
+
+			// Montando um objeto com os dados do usuário
+			$usuario = new Usuario($nome, $email, $senha, $tipo, $id);
+
+			// Executar o serviço para atualizar
+			$usuarioServico->atualizar($usuario);
+
+			// Redirecionar para a lista de usuários
+			Utils::redirecionarPara("usuarios.php");
+
 		} catch (\Throwable $th) {
 			
 			$erro = "Erro ao editar usuário. <br>".$e->getMessage();

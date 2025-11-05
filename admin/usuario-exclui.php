@@ -1,6 +1,12 @@
 <?php
 
 require_once "../includes/cabecalho-admin.php";
+require_once "../src/Services/UsuarioServico.php";
+
+
+
+
+
 ?>
 
 
@@ -10,7 +16,8 @@ require_once "../includes/cabecalho-admin.php";
 		<h2 class="text-center">
 			Excluir usuário
 		</h2>
-
+		<p>Usuario excluido com sucesso</p>
+		<a href="../admin/usuarios.php">Voltar</a>
 			
 
 	</article>
