@@ -1,5 +1,29 @@
 <?php
+
+require_once "../src/Database/Conecta.php";
+require_once "../src/Models/Usuario.php";
+require_once "../src/Services/UsuarioServico.php";
+require_once "../src/Helpers/Utils.php";
+
+// Pegar e sanitizar o id vindo através de parâmetro da URL
+$id = Utils::sanitizar($_GET['id'], 'inteiro');
+
+// Se não houver um id válido na URL, faça voltar para a página usuarios
+if(!$id) Utils::redirecionarPara('usuarios.php');
+
+// Inicialização
+$erro = null;
+$usuarioServico = new UsuarioServico();
+
+try {
+	$dados = $usuarioServico->buscarPorId($id);
+} catch (\Throwable $e) {
+	$erro = "Erro ao buscar usuário. <br>".$e->getMessage();
+}
+
+
 require_once "../includes/cabecalho-admin.php";
+
 ?>
 
 
@@ -10,17 +34,22 @@ require_once "../includes/cabecalho-admin.php";
 			Atualizar dados do usuário
 		</h2>
 
+		<!-- O parágrafo abaixo irá aparecer SOMENTE se houver algum erro. E neste caso, exibirá a mensagem de erro. -->
+		<?php if($erro): ?>
+		<p class="alert alert-danger text-center" > <?=$erro?> </p>
+		<?php endif; ?>	
+
 		<form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar" autocomplete="off">
-			<input type="hidden" name="id" value="id do usuário...">
+			<input type="hidden" name="id" value="<?=$dados['id']?>">
 
 			<div class="mb-3">
 				<label class="form-label" for="nome">Nome:</label>
-				<input class="form-control" type="text" id="nome" name="nome" value="nome do usuário...">
+				<input class="form-control" type="text" id="nome" name="nome" value="<?=$dados['nome']?>">
 			</div>
 
 			<div class="mb-3">
 				<label class="form-label" for="email">E-mail:</label>
-				<input class="form-control" type="email" id="email" name="email" value="email do usuário...">
+				<input class="form-control" type="email" id="email" name="email" value="<?=$dados['email']?>">
 			</div>
 
 			<div class="mb-3">
@@ -31,9 +60,11 @@ require_once "../includes/cabecalho-admin.php";
 			<div class="mb-3">
 				<label class="form-label" for="tipo">Tipo:</label>
 				<select class="form-select" name="tipo" id="tipo">
+					
 					<option value=""></option>
-					<option value="editor">Editor</option>
-					<option value="admin">Administrador</option>
+					<option value="editor"<?php if($dados['tipo'] === 'editor') echo "selected"?>>Editor</option>
+					<option value="admin"<?php if($dados['tipo'] === 'admin') echo "selected"?>>Administrador</option>
+				
 				</select>
 			</div>
 
