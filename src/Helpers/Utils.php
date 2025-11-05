@@ -24,8 +24,28 @@ class Utils {
 
     }
 
+    /* Ao chamar método verificarSenha, passamos para ele a senha digitada no formulário e a senha existente no banco. */
+
     public static function codificarSenha(string $valorSenha):string {
         return password_hash($valorSenha, PASSWORD_DEFAULT);
+    }
+
+    public static function verificarSenha(
+        string $senhaDigitadaNoFormulario, string $senhaArmazenadaNoBanco
+    ){
+
+        /* Usamo o password_verify para COMPARAR as duas senhas. */
+        if(password_verify($senhaDigitadaNoFormulario, $senhaArmazenadaNoBanco)){
+            // São iguais ?
+
+                // Então retorne a mesma senha já existente no banco
+            return $senhaArmazenadaNoBanco;
+        } else {
+            // São diferentes ?
+                // Então pega a senha digitada e faça um hash novo
+            return self::codificarSenha($senhaDigitadaNoFormulario);
+        }
+
     }
 
     public static function dump(mixed $dados):void {

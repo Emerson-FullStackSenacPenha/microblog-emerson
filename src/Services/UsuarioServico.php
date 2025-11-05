@@ -56,6 +56,29 @@ class UsuarioServico {
 
     }
 
+    // atualizar (UPDATE/WHERE)
+    public function atualizar(Usuario $dadosDoUsuario):void {
+
+        $sql = "UPDATE usuarios SET 
+                    nome = :nome,
+                    email = :email,
+                    tipo = :tipo,
+                    senha = :senha
+
+                WHERE id = :id";
+
+        $consulta = $this->conexao->prepare($sql);
+
+        $consulta->bindValue(":nome", $dadosDoUsuario->getNome());
+        $consulta->bindValue(":email", $dadosDoUsuario->getEmail());
+        $consulta->bindValue(":tipo", $dadosDoUsuario->getTipo());
+        $consulta->bindValue(":senha", $dadosDoUsuario->getSenha());
+        $consulta->bindValue(":id", $dadosDoUsuario->getId());
+
+        $consulta->execute();
+
+    }
+
 }
 
 ?>
