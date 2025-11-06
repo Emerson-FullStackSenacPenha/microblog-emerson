@@ -3,9 +3,13 @@
 require_once "../includes/cabecalho-admin.php";
 require_once "../src/Services/UsuarioServico.php";
 
+$usuarioServico = new UsuarioServico();
 
-
-
+try {
+	$dados = $usuarioServico->excluirUsuario($id);
+} catch (\Throwable $e) {
+	
+}
 
 ?>
 
