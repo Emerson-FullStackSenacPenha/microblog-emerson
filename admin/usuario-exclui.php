@@ -4,32 +4,52 @@ require_once "../src/Database/conecta.php";
 require_once "../src/Models/usuario.php";
 require_once "../src/Services/UsuarioServico.php";
 require_once "../src/Helpers/Utils.php";
-
 require_once "../includes/cabecalho-admin.php";
 
-$id = $_GET['id'];
+// Captura o valor do ID via URL e sanitiza para garantir que é valor inteiro
+$id = Utils::sanitizar($_GET['id'], 'inteiro');
+
+// Ao tentar abrir usuario-exclui.php sem o parâmetro id, redirecionamos.
+if(!$id) Utils::redirecionarPara("usuarios.php");
+
+$erro = null;
 $usuarioServico = new UsuarioServico();
 
+// Tente...
 try {
+
+	// Excluir o método de excluir passando o id de quem será escluido
 	$usuarioServico->excluirUsuario($id);
+
 } catch (\Throwable $e) {
-	
+
+	// Não deu certo ? Dispare um erro e monte uma mensagem com os detalher
+	$erro = "Erro ao excluir usuário. <br>".$e->getMessage();	
 }
 
 ?>
 
 
 <div class="row">
+
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
 
 		<h2 class="text-center">
 			Excluir usuário
 		</h2>
-		<p>Usuario excluido com sucesso</p>
-		<a href="../admin/usuarios.php">Voltar</a>
-			
 
+		<?php if($erro):?>
+			<p class="alert alert-danger text-center" ><?=$erro?></p>
+		<?php else :?>
+			<p class="alert alert-success text-center" > Usuario excluido com sucesso </p>
+		<?php endif;?>
+
+		<div class="text-center" >
+			<a class="btn btn-light " href="../admin/usuarios.php">Voltar</a>
+		</div>
+		
 	</article>
+
 </div>
 
 

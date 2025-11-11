@@ -88,6 +88,23 @@ class UsuarioServico {
 
     }
 
+    /*  Versão Professor1
+    public function excluir(int $valorId):void {
+    
+        $sql = "DELETE FROM usuarios WHERE id = :id";
+        $consulta = $this->conexao->prepare($sql);
+        $consulta->bindValue(":id",$valorId);
+        $consulta->execute();
+    
+    }
+    */
+
+    /* 
+    public function excluir()
+    
+    */
+
+
 }
 
 ?>
