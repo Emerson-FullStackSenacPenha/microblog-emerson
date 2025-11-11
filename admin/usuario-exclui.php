@@ -14,12 +14,15 @@ if(!$id) Utils::redirecionarPara("usuarios.php");
 
 $erro = null;
 $usuarioServico = new UsuarioServico();
+$dadosDoUsuario = [];
 
 // Tente...
 try {
 
 	// Excluir o método de excluir passando o id de quem será escluido
+	$dadosDoUsuario = $usuarioServico->buscarPorId($id);
 	$usuarioServico->excluirUsuario($id);
+	
 
 } catch (\Throwable $e) {
 
@@ -41,7 +44,7 @@ try {
 		<?php if($erro):?>
 			<p class="alert alert-danger text-center" ><?=$erro?></p>
 		<?php else :?>
-			<p class="alert alert-success text-center" > Usuario excluido com sucesso </p>
+			<p class="alert alert-success text-center" > O Usuario <b><?=$dadosDoUsuario['nome']?></b> foi excluido com sucesso </p>
 		<?php endif;?>
 
 		<div class="text-center" >
