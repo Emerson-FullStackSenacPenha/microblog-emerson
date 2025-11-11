@@ -31,6 +31,18 @@ class AutenticacaoServico {
 
     }
 
+    public static function login(int $valorId, string $valorNome, string $valorTipo) :void {
+        self::iniciarSessao();
+
+        //Criando variáveis de sessão com os dados informados
+        $_SESSION['id'] = $valorId;
+        $_SESSION['nome'] = $valorNome;
+        $_SESSION['tipo'] = $valorTipo;
+
+        // Após logar, vá para admin/index.php
+        Utils::redirecionarPara("admin/");
+
+    }
 
 }
 

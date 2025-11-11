@@ -3,7 +3,10 @@
 require_once "../src/Database/Conecta.php";
 require_once "../src/Models/Usuario.php";
 require_once "../src/Services/UsuarioServico.php";
+
 require_once "../src/Helpers/Utils.php";
+require_once "../src/Services/AutenticacaoServico.php";
+AutenticacaoServico::exigirLogin();
 
 // Variavél que será usada para montar mensagens de erro personalizadas
 $usuarioServico = new UsuarioServico();
