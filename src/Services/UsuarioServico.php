@@ -88,21 +88,22 @@ class UsuarioServico {
 
     }
 
-    /*  Versão Professor1
-    public function excluir(int $valorId):void {
-    
-        $sql = "DELETE FROM usuarios WHERE id = :id";
-        $consulta = $this->conexao->prepare($sql);
-        $consulta->bindValue(":id",$valorId);
-        $consulta->execute();
-    
-    }
-    */
+    // buscarPorEmail (SELECT)
+    public function buscarPorEmail(string $valorEmail): ?array {
 
-    /* 
-    public function excluir()
-    
-    */
+        $sql = "SELECT * FROM usuarios WHERE email = :email";
+        $consulta = $this->conexao->prepare($sql):
+        $consulta->bindValue(":email", $valorEmail);
+        $consulta->execute();
+
+        /*
+        A expressão no return é TRUE?
+        Então retorne os dados como array (fecth)
+        Senão, retorne null
+        */
+        return $consulta->fetch() ?: null;
+
+    }
 
 
 }
