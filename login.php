@@ -18,13 +18,31 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' ){
         $senha = $_POST['senha'];
 
         // Busca pelo usuário através do e-mail
-        $usuarioServico->buscarPorEmail($email);
-
+        $dadosDoUsuario = $usuarioServico->buscarPorEmail($email);
 
         // Se não existir usuário, ou usuário invalido, redirecione para login
-        // Caso contrário, verifique a senha
-        // Estando correta, faça o login e redirecione
-        // Estando errado, mantenha em login.php
+        if(!$dadosDoUsuario){
+            Utils::redirecionarPara("login.php?dados_incorretos");
+        } else {
+            
+            // Caso contrário, verifique a senha
+            if( password_verify( $senha, $dadosDoUsuario['senha'] ) ){
+                // Estando correta, faça o login e redirecione
+                AutenticacaoServico::login(
+                    
+                    $dadosDoUsuario['id'],
+                    $dadosDoUsuario['nome'],
+                    $dadosDoUsuario['tipo']
+
+                );
+            } else {
+                
+                // Estando errado, mantenha em login.php
+                Utils::redirecionarPara("login.php?dados_incorretos");
+                
+            }
+
+        }
 
     }
         
@@ -35,6 +53,10 @@ if(isset($_GET['acesso_proibido'])){
     $mensagem = "Você deve logar primeiro";
 } elseif (isset($_GET['campos_obrigatorios'])){
     $mensagem = "Preencha e-mail e senha";
+} elseif (isset($_GET['dados_incorretos'])){
+    $mensagem = "Algo de errado não está certo";
+} elseif (isset($_GET['saiu'])){
+    $mensagem = "Você saiu do sistema";
 }
 
 require_once "includes/cabecalho.php";
