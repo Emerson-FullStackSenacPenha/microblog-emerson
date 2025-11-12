@@ -1,3 +1,16 @@
+<?php 
+
+require_once "../src/Services/AutenticacaoServico.php";
+
+/* Se existir/houver um parâmetro de URL chamado 'sair',
+execute o método logour. Obs.: para o parâmetro existir,
+é necessário clicar/acionar o link sair.
+*/
+
+if(isset($_GET['sair'])) AutenticacaoServico::logout();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br" class="h-100">
 
@@ -48,7 +61,7 @@
                             <a class="nav-link" href="../index.php" target="_blank">Área pública</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-bold" href=""> <i class="bi bi-x-circle"></i> Sair</a>
+                            <a class="nav-link fw-bold" href="?sair"> <i class="bi bi-x-circle"></i> Sair</a>
                         </li>
                     </ul>
 
