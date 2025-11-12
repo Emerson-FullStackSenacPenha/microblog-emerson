@@ -28,10 +28,12 @@ require_once "../includes/cabecalho-admin.php";
                 Notícias
             </a>
 
-            <a class="btn btn-dark bg-gradient btn-lg" href="usuarios.php">
+            <?php if ($_SESSION['tipo'] === 'admin'): ?>
+            <a   class="btn btn-dark bg-gradient btn-lg" href="usuarios.php">
                 <i class="bi bi-people"></i> <br>
                 Usuários
             </a>
+            <?php endif; ?>
 
 
         </div>
