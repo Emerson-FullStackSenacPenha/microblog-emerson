@@ -6,6 +6,7 @@ require_once "../src/Database/Conecta.php";
 require_once "../src/Helpers/Utils.php";
 require_once "../src/Services/AutenticacaoServico.php";
 AutenticacaoServico::exigirLogin();
+AutenticacaoServico::exigirAdmin();
 
 // Inicialização
 $erro = null;
