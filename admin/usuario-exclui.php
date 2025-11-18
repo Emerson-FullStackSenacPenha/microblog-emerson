@@ -21,18 +21,26 @@ $erro = null;
 $usuarioServico = new UsuarioServico();
 $dadosDoUsuario = [];
 
-// Tente...
-try {
+/* Se o id passado via URL for o mesmo id do usuario que está logado */
+if ($id === $_SESSION['id']) {
+	// Neste caso, não vamos possibilitar a exclusão, e vamos avisar o usuário
+	$erro = "Você não pode excluir seu próprio usuario!";
+} else {
 
-	// Excluir o método de excluir passando o id de quem será escluido
-	$dadosDoUsuario = $usuarioServico->buscarPorId($id);
-	$usuarioServico->excluirUsuario($id);
+	// Caso contrário, siga em frente (carregue os dados e exclua)
+	try {
+
+		$dadosDoUsuario = $usuarioServico->buscarPorId($id);
+		// Excluir o método de excluir passando o id de quem será escluido
+		$usuarioServico->excluirUsuario($id);
 	
 
-} catch (\Throwable $e) {
+	} catch (\Throwable $e) {
 
-	// Não deu certo ? Dispare um erro e monte uma mensagem com os detalher
-	$erro = "Erro ao excluir usuário. <br>".$e->getMessage();	
+		// Não deu certo ? Dispare um erro e monte uma mensagem com os detalher
+		$erro = "Erro ao excluir usuário. <br>".$e->getMessage();	
+	}
+
 }
 
 ?>
