@@ -21,7 +21,9 @@ require_once "../includes/cabecalho-admin.php";
 			Inserir nova notícia
 		</h2>
 
-		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir" autocomplete="off">
+				<!-- Obs: é obrigatório colocar o atributo enctype com o valor multipart/form-data para que o seu formulário ACEITE/PERMIA o envio de ARQUIVOS-->
+
+		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir" autocomplete="off" enctype="multipart/form-data" >
 
 			<div class="mb-3">
 				<label class="form-label" for="titulo">Título:</label>
