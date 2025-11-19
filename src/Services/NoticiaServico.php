@@ -8,7 +8,7 @@ class NoticiaServico {
         $this->conexao = Conecta::getConexao();
     }
     
-    // Versão básica (provisória)
+    // Versão completa usada em admin/noticias.php
     public function buscar(string $tipoUsuario, int $idUsuario):array {
 
         if($tipoUsuario == 'admin'){
@@ -42,5 +42,21 @@ class NoticiaServico {
 
     }
 
+    // admin/noticia-insere.php
+    public function inserir(Noticia $dadosNoticia):void {
+        $sql = "INSERT INTO noticias(titulo, resumo, texto, imagem, usuario_id)
+                VALUES (:titulo, :resumo, :texto, :imagem, :usuario_id)";
+    
+        $consulta = $this->conexao->prepare($sql);
+
+        $consulta->bindValue(":titulo", $dadosNoticia->getTitulo());
+        $consulta->bindValue(":resumo", $dadosNoticia->getResumo());
+        $consulta->bindValue(":texto", $dadosNoticia->getTexto());
+        $consulta->bindValue(":imagem", $dadosNoticia->getImagem());
+        $consulta->bindValue(":usuario_id", $dadosNoticia->getUsuarioId());
+
+        $consulta->execute();
+
+    }
 
 }
