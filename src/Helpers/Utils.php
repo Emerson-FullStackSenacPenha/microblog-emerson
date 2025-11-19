@@ -1,74 +1,105 @@
 <?php
 // src/Helpers/Utils.php
 
-class Utils {
+class Utils
+{
 
     // static pra não precisar criar um objeto
-    
+
     /* Usamos mixed para sinalizar que o método aceita/retorna tipos de dados variados (string, int, array, float etc)
     */
-    public static function sanitizar(mixed $valor, string $tipodeSanitizacao = 'texto'):mixed {
+    public static function sanitizar(mixed $valor, string $tipodeSanitizacao = 'texto'): mixed
+    {
 
-        switch($tipodeSanitizacao){
+        switch ($tipodeSanitizacao) {
 
             case 'inteiro':
                 return (int) filter_var($valor, FILTER_SANITIZE_NUMBER_INT);
-            
+
             case 'email':
-                return trim(filter_var($valor, FILTER_SANITIZE_EMAIL));    
+                return trim(filter_var($valor, FILTER_SANITIZE_EMAIL));
 
             default:
-                return trim(filter_var($valor, FILTER_SANITIZE_SPECIAL_CHARS));    
-
+                return trim(filter_var($valor, FILTER_SANITIZE_SPECIAL_CHARS));
         }
-
     }
 
     /* Ao chamar método verificarSenha, passamos para ele a senha digitada no formulário e a senha existente no banco. */
 
-    public static function codificarSenha(string $valorSenha):string {
+    public static function codificarSenha(string $valorSenha): string
+    {
         return password_hash($valorSenha, PASSWORD_DEFAULT);
     }
 
     public static function verificarSenha(
-        string $senhaDigitadaNoFormulario, string $senhaArmazenadaNoBanco
-    ){
+        string $senhaDigitadaNoFormulario,
+        string $senhaArmazenadaNoBanco
+    ) {
 
         /* Usamo o password_verify para COMPARAR as duas senhas. */
-        if(password_verify($senhaDigitadaNoFormulario, $senhaArmazenadaNoBanco)){
+        if (password_verify($senhaDigitadaNoFormulario, $senhaArmazenadaNoBanco)) {
             // São iguais ?
 
-                // Então retorne a mesma senha já existente no banco
+            // Então retorne a mesma senha já existente no banco
             return $senhaArmazenadaNoBanco;
         } else {
             // São diferentes ?
-                // Então pega a senha digitada e faça um hash novo
+            // Então pega a senha digitada e faça um hash novo
             return self::codificarSenha($senhaDigitadaNoFormulario);
         }
-
     }
 
-    public static function dump(mixed $dados):void {
+    public static function dump(mixed $dados): void
+    {
 
         echo "<pre>";
 
         var_dump($dados);
-        
+
         echo "</pre>";
-
     }
 
-    public static function redirecionarPara(string $paginaDestino):void {
+    public static function redirecionarPara(string $paginaDestino): void
+    {
 
-        header("location:".$paginaDestino);
-		exit;
-
+        header("location:" . $paginaDestino);
+        exit;
     }
 
-    public static function formatarData(string $valorData):string {
+    public static function formatarData(string $valorData): string
+    {
         return date("d/m/Y H:i", strtotime($valorData));
     }
 
-}
+    public static function upload(?array $arquivo): void
+    {
 
-?>
+        if (
+            !$arquivo ||
+            !isset($arquivo["tmp_name"]) ||
+            !is_uploaded_file($arquivo["tmp_name"])
+        ) {
+            throw new Exception("Nenhum arquivo válido foi enviado.");
+        }
+
+        $pastaDeDestino = "../images/";
+        $formatosPermitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
+        $tamanhoMaximo = 2 * 1024 * 1024; // 2MB
+
+        $formatoDoArquivoEnviado = mime_content_type($arquivo["tmp_name"]);
+
+        if (!in_array($formatoDoArquivoEnviado, $formatosPermitidos)) {
+            throw new Exception("Apenas arquivos JPG, PNG, GIF e SVG são permitidos.");
+        }
+
+        if ($arquivo["size"] > $tamanhoMaximo) {
+            throw new Exception("O arquivo é muito grande. Tamanho máximo: 2MB.");
+        }
+
+        $nomeDoArquivo = $pastaDeDestino . basename($arquivo["name"]);
+
+        if (!move_uploaded_file($arquivo["tmp_name"], $nomeDoArquivo)) {
+            throw new Exception("Erro ao mover o arquivo. Código de erro: " . $arquivo["error"]);
+        }
+    }
+}
