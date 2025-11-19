@@ -56,7 +56,7 @@ require_once "../includes/cabecalho-admin.php";
 					<tr>
                         <td><?=$noticia['titulo']?></td>
 						<!-- strtotime converte a string da hora em timestamp -->
-						<td><?= date('d/m/Y H:i', strtotime($noticia['data'])) ?></td>
+						<td><?= Utils::formatarData($noticia['data']) ?></td>
                         <td><?=$noticia['autor']?></td>
                         
 						
