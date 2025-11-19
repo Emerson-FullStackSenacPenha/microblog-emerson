@@ -9,10 +9,36 @@ AutenticacaoServico::exigirLogin();
 $erro = null;
 $noticiaServico = new NoticiaServico();
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+	if (
+		// empty = Vázio, ou seja, Se algum campo estiver vazio
+		empty($_POST['titulo']) || empty($_POST['resumo']) || empty($_POST['texto']) || empty($_FILES['imagem'])
+	) {
+
+
+
+		$erro = "Preencha todos os campos";
+	} else {
+
+		try {
+
+			$titulo = Utils::sanitizar($_POST['titulo']);
+			$texto = Utils::sanitizar($_POST['texto']);
+			$resumo = Utils::sanitizar($_POST['resumo']);
+
+			// Capturando o arquivo enviado peçp input file no html
+			$arquivo = $_FILES['imagem'];
+			Utils::dump($arquivo);
+		} catch (Throwable $e) {
+
+			$erro = "Erro ao inserir notícia." . $e->getMessage();
+		}
+	}
+}
 
 require_once "../includes/cabecalho-admin.php";
 ?>
-
 
 <div class="row">
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
@@ -21,9 +47,14 @@ require_once "../includes/cabecalho-admin.php";
 			Inserir nova notícia
 		</h2>
 
-				<!-- Obs: é obrigatório colocar o atributo enctype com o valor multipart/form-data para que o seu formulário ACEITE/PERMIA o envio de ARQUIVOS-->
+		<!-- O parágrafo abaixo irá aparecer SOMENTE se houver algum erro. E neste caso, exibirá a mensagem de erro. -->
+		<?php if ($erro): ?>
+			<p class="alert alert-danger text-center"> <?= $erro ?> </p>
+		<?php endif; ?>
 
-		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir" autocomplete="off" enctype="multipart/form-data" >
+		<!-- Obs: é obrigatório colocar o atributo enctype com o valor multipart/form-data para que o seu formulário ACEITE/PERMIA o envio de ARQUIVOS-->
+
+		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir" autocomplete="off" enctype="multipart/form-data">
 
 			<div class="mb-3">
 				<label class="form-label" for="titulo">Título:</label>
