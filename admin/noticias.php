@@ -55,7 +55,8 @@ require_once "../includes/cabecalho-admin.php";
 				<?php foreach($noticias as $noticia){ ?>
 					<tr>
                         <td><?=$noticia['titulo']?></td>
-                        <td><?=$noticia['data']?></td>
+						<!-- strtotime converte a string da hora em timestamp -->
+						<td><?= date('d/m/Y H:i:s:m', strtotime($noticia['data'])) ?></td>
                         <td><?=$noticia['autor']?></td>
                         
 						
