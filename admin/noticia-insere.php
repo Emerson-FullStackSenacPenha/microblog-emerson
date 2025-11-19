@@ -29,7 +29,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 			// Capturando o arquivo enviado peçp input file no html
 			$arquivo = $_FILES['imagem'];
-			Utils::dump($arquivo);
+			
+			// Enviamos o arquivo para o servidor (UPLOAD)
+			Utils::upload($arquivo);
+
+			// Pegando APENAS o nome do arquivo, para que seja enviado ao BD
+			$imagem = $arquivo['name'];
+
+			// Criando um objeto para novas noticias
+			$noticia = new Noticia($titulo, $resumo, $texto, $imagem, $_SESSION['id']);
+
+			// Inserindo a noticia
+			$noticiaServico->inserir($noticia);
+
+			// Redirecionando para noticias.php
+			Utils::redirecionarPara("noticias.php");
+
 		} catch (Throwable $e) {
 
 			$erro = "Erro ao inserir notícia." . $e->getMessage();
