@@ -1,7 +1,14 @@
 <?php
+require_once "../src/Database/Conecta.php";
+require_once "../src/Models/Noticia.php";
+require_once "../src/Services/NoticiaServico.php";
 require_once "../src/Helpers/Utils.php";
 require_once "../src/Services/AutenticacaoServico.php";
 AutenticacaoServico::exigirLogin();
+
+$erro = null;
+$noticiaServico = new NoticiaServico();
+
 
 require_once "../includes/cabecalho-admin.php";
 ?>
