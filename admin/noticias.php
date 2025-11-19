@@ -10,7 +10,7 @@ $noticias = [];
 $noticiaServico = new NoticiaServico();
 
 try {
-	$noticias = $noticiaServico->buscar();
+	$noticias = $noticiaServico->buscar($_SESSION['tipo'], $_SESSION['id']);
 	
 } catch (\Throwable $e) {
 	$erro = "Erro ao buscar usuários. <br>".$e->getMessage();
@@ -43,8 +43,11 @@ require_once "../includes/cabecalho-admin.php";
 				<thead class="table-light">
 					<tr>
                         <th>Título</th>
-                        <th>Data</th>				
+                        <th>Data</th>		
+						
+						<?php if($_SESSION['tipo'] === 'admin'): ?>
 						<th>Autor</th>
+						<?php endif;  ?>
 
 						<th class="text-center" colspan="2">Operações</th>
 					</tr>
@@ -57,8 +60,10 @@ require_once "../includes/cabecalho-admin.php";
                         <td><?=$noticia['titulo']?></td>
 						<!-- strtotime converte a string da hora em timestamp -->
 						<td><?= Utils::formatarData($noticia['data']) ?></td>
-                        <td><?=$noticia['autor']?></td>
                         
+						<?php if($_SESSION['tipo'] === 'admin'): ?>
+						<td><?=$noticia['autor']?></td>
+                        <?php endif;?>
 						
 						
 

@@ -9,18 +9,35 @@ class NoticiaServico {
     }
     
     // Versão básica (provisória)
-    public function buscar():array {
+    public function buscar(string $tipoUsuario, int $idUsuario):array {
 
-        $sql = "SELECT  
-                    noticias.id,
-                    noticias.titulo,
-                    noticias.data,
-                    usuarios.nome AS autor
+        if($tipoUsuario == 'admin'){
 
-                FROM noticias JOIN usuarios 
-                ON noticias.usuario_id = usuarios.id
-                ORDER BY data DESC";
-        $consulta = $this->conexao->query($sql);
+            $sql = "SELECT  
+                        noticias.id,
+                        noticias.titulo,
+                        noticias.data,
+                        usuarios.nome AS autor
+
+                    FROM noticias JOIN usuarios 
+                    ON noticias.usuario_id = usuarios.id
+                    ORDER BY data DESC";
+        } else {
+
+            $sql = "SELECT id, titulo, data FROM noticias
+            WHERE usuario_id = :usuario_id
+            ORDER BY data DESC";
+
+        }
+
+        $consulta = $this->conexao->prepare($sql);
+        
+        if ($tipoUsuario !== 'admin'){
+            $consulta->bindValue(":usuario_id", $idUsuario);
+        }
+        
+        $consulta->execute();
+        
         return $consulta->fetchAll();
 
     }
