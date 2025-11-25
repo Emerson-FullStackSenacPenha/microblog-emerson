@@ -83,6 +83,11 @@ require_once "../includes/cabecalho-admin.php";
             Atualizar dados da notícia
         </h2>
 
+        <!-- O parágrafo abaixo irá aparecer SOMENTE se houver algum erro. E neste caso, exibirá a mensagem de erro. -->
+		<?php if($erro): ?>
+		<p class="alert alert-danger text-center" > <?=$erro?> </p>
+		<?php endif; ?>	
+
         <form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar" autocomplete="off" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?= $dados['id'] ?>">
 
