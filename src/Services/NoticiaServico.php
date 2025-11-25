@@ -135,10 +135,10 @@ class NoticiaServico {
         }
 
         $consulta = $this->conexao->prepare($sql);
-        $consulta->bindValue(":id", $idNoticia->getId());
+        $consulta->bindValue(":id", $idNoticia);
 
         if ($tipoUsuario !== 'admin') {
-            $consulta->bindValue(":usuario_id", $idUsuario->getUsuarioId());
+            $consulta->bindValue(":usuario_id", $idUsuario);
         }
 
         $consulta->execute();
