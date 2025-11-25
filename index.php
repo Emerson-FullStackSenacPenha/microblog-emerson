@@ -1,4 +1,20 @@
 <?php
+
+require_once "src/Database/Conecta.php";
+require_once "src/Services/NoticiaServico.php";
+require_once "src/Helpers/Utils.php";
+
+$erro = null;
+$noticias = [];
+$noticiaServico = new NoticiaServico();
+
+try{
+    $noticias = $noticiaServico->buscarNoticiasParaAreaPublica();
+    Utils::dump($noticias);
+} catch (Throwable $e) {
+    $erro = "Erro ao buscar noticias. <br>".$e->getMessage();
+}
+
 require_once "includes/cabecalho.php";
 ?>
 
