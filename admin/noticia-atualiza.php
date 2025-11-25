@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
             /* Se o usuário enviar uma NOVA imagem e se não tem erro no envio */
 
-            if (!empty($arquivo) %% $arquivo['error'] === UPLOAD_ERR_OK ) {
+            if (!empty($arquivo) && $arquivo['error'] === UPLOAD_ERR_OK ) {
                 
                 // Vamos fazer um novo Upload
                 // Enviamos o arquivo para o servidor (UPLOAD)
@@ -51,22 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
 
                 // Caso contrário, vamos manter a imagem que já existe
-                $imagem = $arquivo['name'];    
+                $imagem = $dados['imagem'];    
 
             }
 
 			// Criando um objeto para novas noticias
-			$noticia = new Noticia($titulo, $resumo, $texto, $imagem, $_SESSION['id']);
+			$noticia = new Noticia($titulo, $resumo, $texto, $imagem, $_SESSION['id'], $id);
 
-			// Inserindo a noticia
-			$noticiaServico->inserir($noticia);
+			// Atualizar a noticia passando ela e o tipo de usuário que está logado
+			$noticiaServico->atualizar($noticia, $_SESSION['tipo']);
 
 			// Redirecionando para noticias.php
 			Utils::redirecionarPara("noticias.php");
 
 		} catch (Throwable $e) {
 
-			$erro = "Erro ao inserir notícia." . $e->getMessage();
+			$erro = "Erro ao atualizar notícia." . $e->getMessage();
 		}
 	}
 }
@@ -83,7 +83,7 @@ require_once "../includes/cabecalho-admin.php";
             Atualizar dados da notícia
         </h2>
 
-        <form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar" autocomplete="off">
+        <form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar" autocomplete="off" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?= $dados['id'] ?>">
 
             <div class="mb-3">
