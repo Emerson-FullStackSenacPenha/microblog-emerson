@@ -145,4 +145,13 @@ class NoticiaServico {
 
     }    
 
+    // Métodos para a área pública do site
+    public function buscarNoticiasParaAreaPublica():array {
+        $sql = "SELECT id, titulo, resumo, imagem FROM noticias ORDER BY data DESC";
+
+        $consulta = $this->conexao->query($sql);
+        return $consulta->fetchAll();
+
+    }
+
 }
