@@ -74,7 +74,7 @@ require_once "../includes/cabecalho-admin.php";
 							</a>
 						</td>
 						<td>
-							<a class="btn btn-danger excluir" 
+							<a class="btn btn-danger" id="excluir" 
 							href="noticia-exclui.php?id=<?=$noticia['id']?>">
 							<i class="bi bi-trash"></i> Excluir
 							</a>
@@ -88,6 +88,7 @@ require_once "../includes/cabecalho-admin.php";
 	</article>
 </div>
 
+<script src="../js/confirmar-exclusao.js" ></script>
 
 <?php 
 require_once "../includes/rodape-admin.php";
