@@ -27,7 +27,7 @@ require_once "includes/cabecalho.php";
         <div class="col-md-6 my-1 px-md-1">
             <article class="card shadow-sm h-100">
                 <a href="noticia.php" class="card-link">
-                    <img src="images/<?= $noticia['imagem'] ?>" height="500px" class="card-img-top" alt="Imagem de capa do card">
+                    <img src="_materiais/todas-imagens/<?= $noticia['imagem'] ?>" class="card-img-top" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h3 class="fs-4 card-title"><?= $noticia['titulo'] ?></h3>
                         <p class="card-text"><?= $noticia['resumo'] ?></p>
