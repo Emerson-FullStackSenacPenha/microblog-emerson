@@ -44,14 +44,14 @@ class NoticiaServico {
 
     // admin/noticia-insere.php
     public function inserir(Noticia $dadosNoticia):void {
-        $sql = "INSERT INTO noticias(titulo, resumo, texto, imagem, usuario_id)
+        $sql = "INSERT INTO noticias(titulo, texto, resumo, imagem, usuario_id)
                 VALUES (:titulo, :resumo, :texto, :imagem, :usuario_id)";
     
         $consulta = $this->conexao->prepare($sql);
 
         $consulta->bindValue(":titulo", $dadosNoticia->getTitulo());
-        $consulta->bindValue(":resumo", $dadosNoticia->getResumo());
         $consulta->bindValue(":texto", $dadosNoticia->getTexto());
+        $consulta->bindValue(":resumo", $dadosNoticia->getResumo());
         $consulta->bindValue(":imagem", $dadosNoticia->getImagem());
         $consulta->bindValue(":usuario_id", $dadosNoticia->getUsuarioId());
 
@@ -93,8 +93,8 @@ class NoticiaServico {
 
             $sql = "UPDATE noticias SET
                     titulo = :titulo,
-                    texto = :texto,
                     resumo = :resumo,
+                    texto = :texto,
                     imagem = :imagem
                 WHERE id = :id";
 
@@ -102,8 +102,8 @@ class NoticiaServico {
 
             $sql = "UPDATE noticias SET
                     titulo = :titulo,
-                    texto = :texto,
                     resumo = :resumo,
+                    texto = :texto,
                     imagem = :imagem
                 WHERE id = :id AND usuario_id = :usuario_id";
 
