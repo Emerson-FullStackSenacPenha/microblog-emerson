@@ -10,7 +10,7 @@ $noticiaServico = new NoticiaServico();
 
 try{
     $noticias = $noticiaServico->buscarNoticiasParaAreaPublica();
-    Utils::dump($noticias);
+    //Utils::dump($noticias);
 } catch (Throwable $e) {
     $erro = "Erro ao buscar noticias. <br>".$e->getMessage();
 }

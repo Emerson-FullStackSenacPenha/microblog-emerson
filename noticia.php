@@ -12,7 +12,7 @@ if(!$id) Utils::redirecionarPara("index.php");
 
 try {
     $dados = $noticiaServico->exibirNoticiaCompleta($id);
-    Utils::dump($dados);
+    //Utils::dump($dados);
 } catch (\Throwable $th) {
     $erro = "Erro ao exibir a noticia. <br>".$e->getMessage();
 }
@@ -28,13 +28,15 @@ require_once "includes/cabecalho.php";
 	<?php endif; ?>	
 
     <article class="col-12">
-        <h2> Título da notícia... </h2>
+        <h2><?=$dados['titulo']?></h2>
         <p class="font-weight-light">
-            <time>11/11/2011 - 21:12</time> - 
-            <span>Autor da notícia...</span>
+            <time datetime="<?=$dados['data']?>">
+                <?= Utils::formatarData($dados['data']) ?>
+            </time> - 
+            <span>Autoria de <?=$dados['autor']?></span>
         </p>
-        <img src="images/abstrato.jpg" alt="" class="float-start pe-2 img-fluid">
-        <p class="ajusta-texto">Texto da notícia...</p>
+        <img src="_materiais/todas-imagens/<?=$dados['imagem']?>" alt="" class="float-start pe-2 img-fluid">
+        <p class="ajusta-texto"><?=$dados['texto']?></p>
     </article>
     
 
