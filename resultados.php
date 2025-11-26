@@ -27,10 +27,13 @@ require_once "includes/cabecalho.php";
 <div class="row my-1 mx-md-n1">
     <h2 class="col-12 fs-5 fw-light">
         Você procurou por 
-        <span class="badge bg-dark"> termo digitado... </span> e
-        obteve <span class="badge bg-info">  X </span> resultados
+        <span class="badge bg-dark"><?= $termo ?></span> e
+        obteve <span class="badge bg-info">  <?= count($dados) ?> </span> resultados
     </h2>
     
+    <p class="alert alert-warning text-center">Nenhum resultado encontrado!</p>
+
+        
 
     <div class="col-12 my-1">
         <article class="card">
