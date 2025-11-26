@@ -154,4 +154,24 @@ class NoticiaServico {
 
     }
 
+    public function exibirNoticiaCompleta(int $idNoticia):array {
+
+        $sql = "SELECT
+                    noticias.id,
+                    noticias.titulo,
+                    noticias.data,
+                    noticias.texto,
+                    noticias.imagem,
+                    usuarios.nome AS autor
+                FROM noticias JOIN usuarios
+                ON noticias.usuario_id = usuarios.id
+                WHERE noticias.id = :id";
+
+        $consulta = $this->conexao->prepare($sql);
+        $consulta->bindValue(":id", $idNoticia);
+        $consulta->execute();
+        return $consulta->fetch();
+
+    }
+
 }
