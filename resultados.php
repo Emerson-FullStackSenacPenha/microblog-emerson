@@ -12,7 +12,7 @@ $termo = Utils::sanitizar($_GET['busca']);
 
 try {
     $dados = $noticiaServico->buscarNoticias($termo);
-    Utils::dump($dados);
+    //Utils::dump($dados);
 } catch (Throwable $e) {
     $erro = "Erro ao fazer a busca no sistema.<br>".$e->getMessage();
 }
@@ -31,29 +31,34 @@ require_once "includes/cabecalho.php";
         obteve <span class="badge bg-info">  <?= count($dados) ?> </span> resultados
     </h2>
     
-    <p class="alert alert-warning text-center">Nenhum resultado encontrado!</p>
+    <?php if(count($dados)<=0)  :?>
+        <p class="alert alert-warning text-center">Nenhum resultado encontrado!</p>
+    <?php endif;?>       
 
-        
+    <?php foreach($dados as $dado){ ?>
 
-    <div class="col-12 my-1">
-        <article class="card">
-            <div class="card-body">
-                <h3 class="fs-4 card-title fw-light">
-                    Título da notícia...
-                </h3>
-                <p class="card-text">
-                    <time>11/11/2011 21:12</time> - 
-                    Resumo da notícia...
-                </p>
-                
-                <a href="noticia.php" 
-                class="btn btn-primary btn-sm">Continuar lendo</a>
-            </div>
-        </article>
-    </div>
+        <div class="col-12 my-1">
+            <article class="card">
+                <div class="card-body">
+                    <h3 class="fs-4 card-title fw-light">
+                        <?= $dado['titulo'] ?>
+                    </h3>
+                    <p class="card-text">
+                        <time datetime="<?= $dado['data'] ?>" >
+                            <?= Utils::formatarData($dado['data']) ?>
+                        </time> -
+                        <?= $dado['resumo'] ?>
+                    </p>
+                    
+                    <a href="noticia.php?id=<?= $dado['id'] ?>" 
+                    class="btn btn-primary btn-sm">Continuar lendo</a>
+                </div>
+            </article>
+        </div>
+    
+    <?php } ?>    
 
 </div>     
-
 
 <?php
 require_once "includes/rodape.php";
