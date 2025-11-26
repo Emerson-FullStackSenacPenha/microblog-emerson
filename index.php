@@ -18,6 +18,10 @@ try{
 require_once "includes/cabecalho.php";
 ?>
 
+    <?php if($erro): ?>
+		<p class="alert alert-danger text-center" > <?=$erro?> </p>
+	<?php endif; ?>	
+
 <div class="row my-1 mx-md-n1">
 
     <!-- INÍCIO Card -->

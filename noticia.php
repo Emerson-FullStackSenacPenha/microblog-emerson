@@ -1,10 +1,31 @@
 <?php
 
+require_once "src/Database/Conecta.php";
+require_once "src/Services/NoticiaServico.php";
+require_once "src/Helpers/Utils.php";
+
+$erro = null;
+$noticiaServico = new NoticiaServico();
+
+$id = Utils::sanitizar($_GET['id'], 'inteiro');
+if(!$id) Utils::redirecionarPara("index.php");
+
+try {
+    $dados = $noticiaServico->exibirNoticiaCompleta($id);
+    Utils::dump($dados);
+} catch (\Throwable $th) {
+    $erro = "Erro ao exibir a noticia. <br>".$e->getMessage();
+}
+
 require_once "includes/cabecalho.php";
 ?>
 
 
 <div class="row my-1 mx-md-n1">
+
+    <?php if($erro): ?>
+		<p class="alert alert-danger text-center" > <?=$erro?> </p>
+	<?php endif; ?>	
 
     <article class="col-12">
         <h2> Título da notícia... </h2>
